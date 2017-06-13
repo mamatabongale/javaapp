@@ -14,6 +14,9 @@ node {
         def aws_ecs_cluster_name = 'trial'
         def aws_ecs_task_definition = 'trial'
         def aws_ecs_task_desired_count = '1'
+        def aws_ecs_instance_type = 't2.micro'
+        def aws_ecs_key_name = 'wow'
+        def aws_ecs_subnet_id = '3e4b0248'
         def service_value = 'create'
         def service_option = '--service-name'
         
@@ -40,6 +43,10 @@ node {
                 sh 'ls -lart'
                 aws_pkg.push "v${BUILD_NUMBER}"
         }
+        
+        stage 'ECS cluster creation'
+        sh "${aws_cli_home}/aws ec2 run-instances --instance-type ${aws_ecs_instance_type} --image-id ami-f63f6f91 --key-name ${aws_ecs_key_name} --count 1 --subnet-id subnet-${aws_ecs_subnet_id} --iam-instance-profile Name=ecsInstanceRole --user-data file://ecs_cluster_user_data.sh"
+        sh "${aws_cli_home}/aws ecs create-cluster --cluster-name \"${aws_ecs_cluster_name}\""
         
         stage 'ECS task definition'
         sh "${aws_cli_home}/aws ecs register-task-definition --cli-input-json file://task_definition.json"
