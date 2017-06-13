@@ -2,9 +2,9 @@ node {
         def git_repo = 'https://github.com/hapx101/javaapp.git'
         def docker_hub_key = '7e8d43a5-00ea-43b9-b6d4-8f1bfe7b5e40'
         def maven_home = '/opt/apache-maven-3.5.0/bin'
-        def aws_ecr_account_url = 'https://016866562124.dkr.ecr.ap-northeast-1.amazonaws.com'
+        def aws_ecr_account_url = '016866562124.dkr.ecr.ap-northeast-1.amazonaws.com'
         def aws_ecr_repo = 'trial'
-        def aws_ecr_repo_url = "${aws_ecr_account_url}/${aws_ecr_repo}"
+        def aws_ecr_repo_url = "https://${aws_ecr_account_url}/${aws_ecr_repo}"
         def docker_hub_account = 'hapx'
         def docker_hub_repo = 'trial'
         def aws_region = 'ap-northeast-1'
@@ -12,6 +12,9 @@ node {
         def aws_cli_home = '~/.local/bin'
         def aws_ecs_service_name = 'trial'
         def aws_ecs_cluster_name = 'trial'
+        def aws_ecs_task_container_memory = '400'
+        def aws_ecs_task_container_port = '8080'
+        def aws_ecs_task_host_port = '80'
         def aws_ecs_task_definition = 'trial'
         def aws_ecs_task_desired_count = '1'
         def aws_ecs_instance_type = 't2.micro'
@@ -39,7 +42,7 @@ node {
         
         stage 'AWS ECR image push'
         sh "${aws_cli_home}/aws ecr get-login --no-include-email --region ${aws_region}"
-        docker.withRegistry ("${aws_ecr_account_url}/${aws_ecr_repo}", "ecr:${aws_region}:${aws_ecr_repo_key}") {
+        docker.withRegistry ("${aws_ecr_repo_url}", "ecr:${aws_region}:${aws_ecr_repo_key}") {
                 sh 'ls -lart'
                 aws_pkg.push "v${BUILD_NUMBER}"
         }
@@ -49,6 +52,7 @@ node {
         sh "${aws_cli_home}/aws ecs create-cluster --cluster-name \"${aws_ecs_cluster_name}\""
         
         stage 'ECS task definition'
+        sh "./task_definition.sh ${aws_ecs_task_definition} ${aws_ecr_account_url} ${aws_ecr_repo} v${BUILD_NUMBER} ${aws_ecs_task_definition} ${aws_ecs_container_memory} ${aws_ecs_task_container_port} ${aws_ecs_task_host_port}
         sh "${aws_cli_home}/aws ecs register-task-definition --cli-input-json file://task_definition.json"
         
         stage 'ECS service definition'
