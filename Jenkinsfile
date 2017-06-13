@@ -41,6 +41,9 @@ node {
                 aws_pkg.push "v${BUILD_NUMBER}"
         }
         
+        stage 'ECS cluster creation'
+        sh "${aws_cli_home}/aws ecs create-cluster --cluster-name \"${aws_ecs_cluster_name}\""
+        
         stage 'ECS task definition'
         sh "${aws_cli_home}/aws ecs register-task-definition --cli-input-json file://task_definition.json"
         
