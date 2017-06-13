@@ -1,0 +1,18 @@
+{
+    "family": "family_def",
+    "containerDefinitions": [
+        {
+            "image": "repo_name/image_name:image_tag",
+            "name": "name_def",
+            "cpu": 10,
+            "memory": memory_def,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": container_port_def,
+                    "hostPort": host_port_def
+                }
+            ]
+        }
+    ]
+}
