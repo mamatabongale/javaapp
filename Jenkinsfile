@@ -52,7 +52,7 @@ node {
         sh "${aws_cli_home}/aws ecs create-cluster --cluster-name \"${aws_ecs_cluster_name}\""
         
         stage 'ECS task definition'
-        sh "./task_definition.sh ${aws_ecs_task_definition} ${aws_ecr_account_url} ${aws_ecr_repo} v${BUILD_NUMBER} ${aws_ecs_task_definition} ${aws_ecs_container_memory} ${aws_ecs_task_container_port} ${aws_ecs_task_host_port}
+        sh "./task_definition.sh ${aws_ecs_task_definition} ${aws_ecr_account_url} ${aws_ecr_repo} v${BUILD_NUMBER} ${aws_ecs_task_definition} ${aws_ecs_container_memory} ${aws_ecs_task_container_port} ${aws_ecs_task_host_port}"
         sh "${aws_cli_home}/aws ecs register-task-definition --cli-input-json file://task_definition.json"
         
         stage 'ECS service definition'
