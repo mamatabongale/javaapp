@@ -51,7 +51,7 @@ node {
         
         stage 'ECS cluster creation'
         sh "chmod a+x ami_selection.sh"
-        def ecs_image_id = sh(returnStdout: true, script: "./selection.sh")
+        def ecs_image_id = sh(returnStdout: true, script: "./ami_selection.sh ${aws_region}")
         def instance_script = "${aws_cli_home}/aws ec2 describe-instances --filters \"Name=tag:ECS_cluster_instance,Values=${aws_ec2_cluster_instance}\" \"Name=instance-state-name,Values=running\"  | grep 'InstanceId'"
         def instance_status = sh(returnStdout: true, script: "${instance_script} || true")
         sh "sed -i \"s/ecs_cluster_def/${aws_ecs_cluster_name}/g\" ecs_cluster_user_data.sh"
