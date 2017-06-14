@@ -1,5 +1,5 @@
 #!/bin/bash
-case $1 in 
+case $a in 
 us-east-1) ami_id=ami-0e297018 ;;
 us-east-2) ami_id=ami-43d0f626 ;;
 us-west-1) ami_id=ami-fcd7f59c ;;
@@ -13,4 +13,4 @@ ap-southeast-2) ami_id=ami-ac5849cf ;;
 ca-central-1) ami_id=ami-8cfb44e8 ;;
 *) echo "Region not specified";exit 127 ;;
 esac
-echo $ami_id
+echo $ami_id | cut -f1
