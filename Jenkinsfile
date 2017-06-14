@@ -49,8 +49,11 @@ node {
         }
         
         stage 'ECS cluster creation'
-        def instance_script = "${aws_cli_home}/aws ec2 describe-instances"
-        sh "${aws_cli_home}/aws ec2 run-instances --instance-type ${aws_ecs_instance_type} --image-id ami-f63f6f91 --key-name ${aws_ecs_key_name} --count 1 --subnet-id subnet-${aws_ecs_subnet_id} --iam-instance-profile Name=ecsInstanceRole --user-data file://ecs_cluster_user_data.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=ECS_cluster_instance,Value=${aws_ec2_cluster_instance}}]'"
+        def instance_script = "${aws_cli_home}/aws ec2 describe-instances --filters \"Name=tag:ECS_cluster_instance,Values=${aws_ec2_cluster_instance}\" \"Name=instance-state-name,Values=running\"  | grep 'InstanceId'"
+        def instance_status = sh(returnStdout: true, script: "${instance_script} || true")
+        if ("${instance_status}" == '') {
+                sh "${aws_cli_home}/aws ec2 run-instances --instance-type ${aws_ecs_instance_type} --image-id ami-f63f6f91 --key-name ${aws_ecs_key_name} --count 1 --subnet-id subnet-${aws_ecs_subnet_id} --iam-instance-profile Name=ecsInstanceRole --user-data file://ecs_cluster_user_data.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=ECS_cluster_instance,Value=${aws_ec2_cluster_instance}}]'"
+        }
         def cluster_script = "${aws_cli_home}/aws ecs list-clusters | grep 'cluster/${aws_ecs_cluster_name}'"
         def cluster_status = sh(returnStdout: true, script: "${cluster_script} || true")
         if ("${cluster_status}" == '') {
