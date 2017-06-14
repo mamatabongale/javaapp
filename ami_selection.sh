@@ -1,5 +1,5 @@
 #!/bin/bash
-case $a in 
+case $1 in 
 us-east-1) ami_id=ami-0e297018 ;;
 us-east-2) ami_id=ami-43d0f626 ;;
 us-west-1) ami_id=ami-fcd7f59c ;;
