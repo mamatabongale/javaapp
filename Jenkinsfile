@@ -73,4 +73,7 @@ node {
                 service_option = '--service'
         }
         sh "${aws_cli_home}/aws ecs ${service_value}-service --cluster ${aws_ecs_cluster_name} ${service_option} ${aws_ecs_service_name} --task-definition ${aws_ecs_task_definition} --desired-count ${aws_ecs_task_desired_count}"
+        
+        stage 'ECS task run'
+        sh "${aws_cli_home}/aws ecs run-task --task-definition ${aws_ecs_task_definition}"
 }
