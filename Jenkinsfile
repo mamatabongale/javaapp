@@ -11,6 +11,7 @@ node {
         def aws_ecr_repo_key = 'c7d52f05-c3ad-4001-a188-17d44560f4b3'
         def aws_cli_home = '~/.local/bin'
         def aws_ec2_cluster_instance = 'trial'
+        def aws_ec2_cluster_instance_count = '1'
         def aws_ecs_service_name = 'trial'
         def aws_ecs_cluster_name = 'trial'
         def aws_ecs_task_container_memory = '400'
@@ -49,10 +50,13 @@ node {
         }
         
         stage 'ECS cluster creation'
+        sh "chmod a+x ami_selection.sh"
+        def ecs_image_id = sh(returnStdout: true, script: "./selection.sh")
         def instance_script = "${aws_cli_home}/aws ec2 describe-instances --filters \"Name=tag:ECS_cluster_instance,Values=${aws_ec2_cluster_instance}\" \"Name=instance-state-name,Values=running\"  | grep 'InstanceId'"
         def instance_status = sh(returnStdout: true, script: "${instance_script} || true")
+        sh "sed -i \"s/ecs_cluster_def/${aws_ecs_cluster_name}/g\" ecs_cluster_user_data.sh"
         if ("${instance_status}" == '') {
-                sh "${aws_cli_home}/aws ec2 run-instances --instance-type ${aws_ecs_instance_type} --image-id ami-f63f6f91 --key-name ${aws_ecs_key_name} --count 1 --subnet-id subnet-${aws_ecs_subnet_id} --iam-instance-profile Name=ecsInstanceRole --user-data file://ecs_cluster_user_data.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=ECS_cluster_instance,Value=${aws_ec2_cluster_instance}}]'"
+                sh "${aws_cli_home}/aws ec2 run-instances --instance-type ${aws_ecs_instance_type} --image-id ${ecs_image_id} --key-name ${aws_ecs_key_name} --count ${aws_ec2_cluster_instance_count} --subnet-id subnet-${aws_ecs_subnet_id} --iam-instance-profile Name=ecsInstanceRole --user-data file://ecs_cluster_user_data.sh --tag-specifications 'ResourceType=instance,Tags=[{Key=ECS_cluster_instance,Value=${aws_ec2_cluster_instance}}]'"
         }
         def cluster_script = "${aws_cli_home}/aws ecs list-clusters | grep 'cluster/${aws_ecs_cluster_name}'"
         def cluster_status = sh(returnStdout: true, script: "${cluster_script} || true")
