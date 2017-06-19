@@ -1,12 +1,9 @@
 node {
         def git_repo = 'https://github.com/hapx101/javaapp.git'
-        def docker_hub_key = '7e8d43a5-00ea-43b9-b6d4-8f1bfe7b5e40'
         def maven_home = '/opt/apache-maven-3.5.0/bin'
         def aws_ecr_account_url = '016866562124.dkr.ecr.ap-northeast-1.amazonaws.com'
         def aws_ecr_repo = 'trial'
         def aws_ecr_repo_url = "https://${aws_ecr_account_url}/${aws_ecr_repo}"
-        def docker_hub_account = 'hapx'
-        def docker_hub_repo = 'trial'
         def aws_region = 'ap-northeast-1'
         def aws_ecr_repo_key = 'c7d52f05-c3ad-4001-a188-17d44560f4b3'
         def aws_cli_home = '~/.local/bin'
@@ -36,12 +33,6 @@ node {
         def pkg = docker.build ("${docker_hub_account}/${docker_hub_repo}", '.')
         def aws_pkg = docker.build ("${aws_ecr_repo}", '.')
 
-        stage 'DockerHub Push'
-        docker.withRegistry ('https://index.docker.io/v1', "${docker_hub_key}") {
-                sh 'ls -lart'
-                pkg.push "v${BUILD_NUMBER}"
-        }
-        
         stage 'AWS ECR image push'
         sh "${aws_cli_home}/aws ecr get-login --no-include-email --region ${aws_region}"
         docker.withRegistry ("${aws_ecr_repo_url}", "ecr:${aws_region}:${aws_ecr_repo_key}") {
