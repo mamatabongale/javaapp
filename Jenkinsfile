@@ -22,3 +22,4 @@ node {
                 sh 'ls -lart'
                 pkg.push "v${BUILD_NUMBER}"
         }
+}
