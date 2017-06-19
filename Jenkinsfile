@@ -1,9 +1,9 @@
 properties([parameters([
-        string(defaultValue: 'https://github.com/hapx101/javaapp.git', description: 'Git repo URL', name: 'git_repo')
-        string(defaultValue: 'Dockerhub', description: 'git branch', name: 'git_branch')
-        string(defaultValue: '7e8d43a5-00ea-43b9-b6d4-8f1bfe7b5e40', description: 'dockerhub key', name: 'docker_hub_key')
-        string(defaultValue: '/opt/apache-maven-3.5.0/bin', description: 'maven home', name: 'maven_home')
-        string(defaultValue: 'hapx', description: 'docker hub account', name: 'docker_hub_account')
+        string(defaultValue: 'https://github.com/hapx101/javaapp.git', description: 'Git repo URL', name: 'git_repo'),
+        string(defaultValue: 'Dockerhub', description: 'git branch', name: 'git_branch'),
+        string(defaultValue: '7e8d43a5-00ea-43b9-b6d4-8f1bfe7b5e40', description: 'dockerhub key', name: 'docker_hub_key'),
+        string(defaultValue: '/opt/apache-maven-3.5.0/bin', description: 'maven home', name: 'maven_home'),
+        string(defaultValue: 'hapx', description: 'docker hub account', name: 'docker_hub_account'),
         string(defaultValue: 'trial', description: 'docker hub repo', name: 'docker_hub_repo')])])
 node {
         stage 'SCM polling'
