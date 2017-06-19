@@ -7,18 +7,18 @@ properties([parameters([
         string(defaultValue: 'trial', description: 'docker hub repo', name: 'docker_hub_repo')])])
 node {
         stage 'SCM polling'
-        git url: "${git_repo}, branch: ${git_branch}"
+        git url: "${params.git_repo}, branch: ${params.git_branch}"
 
         stage 'Maven build'
-        sh "${maven_home}/mvn clean install"
+        sh "${params.maven_home}/mvn clean install"
         archive 'target/*.war'
 
         stage 'Docker image build'
-        def pkg = docker.build ("${docker_hub_account}/${docker_hub_repo}", '.')
-        def aws_pkg = docker.build ("${aws_ecr_repo}", '.')
+        def pkg = docker.build ("${params.docker_hub_account}/${params.docker_hub_repo}", '.')
+        def aws_pkg = docker.build ("${params.aws_ecr_repo}", '.')
 
         stage 'DockerHub Push'
-        docker.withRegistry ('https://index.docker.io/v1', "${docker_hub_key}") {
+        docker.withRegistry ('https://index.docker.io/v1', "${params.docker_hub_key}") {
                 sh 'ls -lart'
                 pkg.push "v${BUILD_NUMBER}"
         }
