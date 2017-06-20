@@ -20,7 +20,7 @@ node {
         def aws_ecs_task_definition = 'trial'
         def aws_ecs_task_desired_count = '1'
         def aws_ecs_instance_type = 't2.micro'
-        def aws_ecs_key_name = 'wow'
+        def aws_ecs_key_name = 'try'
         def aws_ecs_subnet_id = '52101e24'
         def service_value = 'create'
         def service_option = '--service-name'
