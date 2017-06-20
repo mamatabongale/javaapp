@@ -1,11 +1,11 @@
 node {
-        def git_repo = 'https://github.com/hapx101/javaapp.git'
+        def git_repo = 'https://github.com/mamatabongale/javaapp.git'
         def maven_home = '/opt/apache-maven-3.5.0/bin'
-        def aws_ecr_account_url = '016866562124.dkr.ecr.ap-northeast-1.amazonaws.com'
+        def aws_ecr_account_url = '199595574678.dkr.ecr.ap-northeast-1.amazonaws.com'
         def aws_ecr_repo = 'trial'
         def aws_ecr_repo_url = "https://${aws_ecr_account_url}/${aws_ecr_repo}"
         def aws_region = 'ap-northeast-1'
-        def aws_ecr_repo_key = 'c7d52f05-c3ad-4001-a188-17d44560f4b3'
+        def aws_ecr_repo_key = '75f651ba-d270-413d-8ae8-d162aacd4b7a'
         def aws_cli_home = '~/.local/bin'
         def aws_ec2_cluster_instance = 'trial'
         def aws_ec2_cluster_instance_count = '1'
@@ -18,7 +18,7 @@ node {
         def aws_ecs_task_desired_count = '1'
         def aws_ecs_instance_type = 't2.micro'
         def aws_ecs_key_name = 'wow'
-        def aws_ecs_subnet_id = '3e4b0248'
+        def aws_ecs_subnet_id = '52101e24'
         def service_value = 'create'
         def service_option = '--service-name'
         
