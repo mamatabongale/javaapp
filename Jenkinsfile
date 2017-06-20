@@ -8,10 +8,7 @@ properties([parameters([
 node {
         stage 'SCM polling'
         checkout ([$class: 'GitSCM',
-                branches: [[name: "*/${GIT_BRANCH}"]],
-                extensions: scm.extensions, 
-                submoduleCfg: scm.submoduleCfg, 
-                userRemoteConfigs: scm.userRemoteConfigs
+                branches: [[name: "*/${GIT_BRANCH}"]]
         ])
         
         stage 'Maven build'
