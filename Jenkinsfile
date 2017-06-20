@@ -7,8 +7,7 @@ properties([parameters([
         string(defaultValue: 'trial', description: 'docker hub repo', name: 'docker_hub_repo')])])
 node {
         stage 'SCM polling'
-        checkout ([
-                $class: 'GitSCM',
+        checkout ([$class: 'GitSCM',
                 branches: [[name: "*/${GIT_BRANCH}"]],
                 doGenerateSubmoduleConfigurations: false, 
                 extensions: [], 
