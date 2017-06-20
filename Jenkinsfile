@@ -9,10 +9,10 @@ node {
         stage 'SCM polling'
         checkout ([$class: 'GitSCM',
                 branches: [[name: "*/${GIT_BRANCH}"]],
-                doGenerateSubmoduleConfigurations: false, 
-                extensions: [], 
-                submoduleCfg: [], 
-                userRemoteConfigs: [[]]
+                doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations, 
+                extensions: scm.extensions, 
+                submoduleCfg: scm.submoduleCfg, 
+                userRemoteConfigs: scm.userRemoteConfigs
         ])
         
         stage 'Maven build'
