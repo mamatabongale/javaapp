@@ -9,7 +9,6 @@ node {
         stage 'SCM polling'
         checkout ([$class: 'GitSCM',
                 branches: [[name: "*/${GIT_BRANCH}"]],
-                doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations, 
                 extensions: scm.extensions, 
                 submoduleCfg: scm.submoduleCfg, 
                 userRemoteConfigs: scm.userRemoteConfigs
