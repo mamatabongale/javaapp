@@ -7,7 +7,7 @@ properties([parameters([
         string(defaultValue: 'trial', description: 'docker hub repo', name: 'docker_hub_repo')])])
 node {
         stage 'SCM polling'
-        git url: "${params.git_repo} ${params.GIT_BRANCH}"
+        git ([url: "${params.git_repo}, branch: ${params.GIT_BRANCH}"])
         
         stage 'Maven build'
         sh "${params.maven_home}/mvn clean install"
