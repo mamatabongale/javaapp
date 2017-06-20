@@ -7,9 +7,7 @@ properties([parameters([
         string(defaultValue: 'trial', description: 'docker hub repo', name: 'docker_hub_repo')])])
 node {
         stage 'SCM polling'
-        checkout ([$class: 'GitSCM',
-                branches: [[name: "*/${GIT_BRANCH}"]]
-        ])
+        checkout scm
         
         stage 'Maven build'
         sh "${params.maven_home}/mvn clean install"
