@@ -1,4 +1,4 @@
-node {
+node{
         def git_repo = 'https://github.com/mamatabongale/javaapp.git'
         def maven_home = '/opt/apache-maven-3.5.0/bin'
         def aws_ecr_account_url = '199595574678.dkr.ecr.ap-northeast-1.amazonaws.com'
@@ -21,6 +21,7 @@ node {
         def aws_ecs_subnet_id = '52101e24'
         def service_value = 'create'
         def service_option = '--service-name'
+
         
         stage 'SCM polling'
         git url: "${git_repo}"
