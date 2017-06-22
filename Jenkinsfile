@@ -1,7 +1,7 @@
 properties([parameters([
         string(defaultValue: 'https://github.com/mamatabongale/javaapp.git', description: 'Git repo URL', name: 'git_repo'),
         string(defaultValue: 'Dockerhub', description: 'git branch', name: 'GIT_BRANCH'),
-        string(defaultValue: '45271e99-a83e-461b-b073-f2d1407e6f83', description: 'dockerhub key', name: 'docker_hub_key'),
+        string(defaultValue: '885593d5-f859-4376-9d2d-d850f6a2c1a7', description: 'dockerhub key', name: 'docker_hub_key'),
         string(defaultValue: '/opt/apache-maven-3.5.0/bin', description: 'maven home', name: 'maven_home'),
         string(defaultValue: 'mamata', description: 'docker hub account', name: 'docker_hub_account'),
         string(defaultValue: 'trial', description: 'docker hub repo', name: 'docker_hub_repo')])])
